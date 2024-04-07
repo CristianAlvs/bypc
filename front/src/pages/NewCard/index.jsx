@@ -1,14 +1,14 @@
 import { Modal } from './styles'
 
-import { Home } from '../Home';
-import { ModalNewCard } from '../../components/ModalNewCard';
+import { MeusCards } from '../MeusCards';
+import { ModalCard } from '../../components/ModalCard';
 
 export function NewCard() {
   return (
     <div>
-      <Home />
+      <MeusCards />
       <Modal>
-        <ModalNewCard />
+        <ModalCard />
       </Modal>
     </div>
   )

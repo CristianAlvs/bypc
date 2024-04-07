@@ -15,7 +15,6 @@ export function Default() {
             <Link to="/new">
                 <Button title="Novo Card" />
             </Link>
-
         </Container>
     )
 }

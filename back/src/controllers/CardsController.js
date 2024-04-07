@@ -33,6 +33,47 @@ class CardsController {
 
         response.json();
     }
+
+    async show(request, response) {
+        const { id } = request.params;
+
+        const card = await knex("cards").where({ id }).first();
+        const tag = await knex("tags").where({ id: card.tag_id }).first();
+        const link = await knex("links").where({ card_id: id }).first();
+
+        return response.json({
+            ...card,
+            tag,
+            link
+        });
+    }
+
+    async delete(request, response) {
+        const { id } = request.params;
+
+        await knex("cards").where({ id }).delete();
+
+        return response.json();
+    }
+
+    async index(request, response) {
+        const { user_id } = request.query;
+
+        const cardsRequest = await knex("cards").where({ user_id }).orderBy("title");
+
+        const cards = await Promise.all(cardsRequest.map(async (card) => {
+            const tag = await knex("tags").where({ id: card.tag_id }).first();
+            const link = await knex("links").where({ card_id: card.id }).first();
+            
+            return {
+                ...card,
+                tag,
+                link
+            };
+        }));
+
+        return response.json(cards);
+    }
 }
 
 module.exports = CardsController;

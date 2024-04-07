@@ -14,7 +14,7 @@ import { api } from '../../services/api';
 
 import { Container, Header, Main, Footer, Column } from './styles';
 
-export function ModalNewCard() {
+export function ModalCard() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
@@ -112,7 +112,7 @@ export function ModalNewCard() {
         </Column>
       </Main>
       <Footer>
-        <Button title={"Salvar"} onClick={handleNewCard}></Button>
+        <Button title={"Salvar"} padding="8px 50px" fontSize="14px" onClick={handleNewCard}></Button>
       </Footer>
     </Container>
   )

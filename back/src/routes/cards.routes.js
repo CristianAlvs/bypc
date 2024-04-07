@@ -9,6 +9,9 @@ const upload = multer(uploadConfig.MULTER);
 
 const cardsController = new CardsController();
 
+cardsRoutes.get("/", cardsController.index);
 cardsRoutes.post("/:user_id", upload.single("image"), cardsController.create);
+cardsRoutes.get("/:id", cardsController.show);
+cardsRoutes.delete("/:id", cardsController.delete);
 
 module.exports = cardsRoutes;

@@ -24,11 +24,11 @@ export function Header() {
             <div className='totalAndButton'>
                 <Total>
                     <span>TOTAL</span>
-                    <span>R$ 12,00</span>
+                    <span>R$ 00,00</span>
                 </Total>
 
                 <Link to="/new">
-                    <Button title="Novo Card" />
+                    <Button title="Novo Card" padding="12px" fontSize="18px"/>
                 </Link>
             </div>
             

@@ -6,10 +6,9 @@ export const Container = styled.button`
 
     border: none;
     border-radius: 4px;
-    padding: 12px 38px;
+    height: 100%;
     line-height: 19px;
     font-weight:700;
-    font-size: 18px;
 
     &:disabled{
         opacity: 0.5;

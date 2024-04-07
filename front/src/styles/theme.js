@@ -13,6 +13,7 @@ export default {
 
       FONT_COLOR: "#323232",
   
-      RED: "#FF002E"
+      RED: "#FF002E",
+      GREEN: "#00C013"
     }
   }
