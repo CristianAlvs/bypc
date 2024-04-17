@@ -21,5 +21,6 @@ export const Content = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
     gap: 20px;
+    padding-bottom: 32px;
 `;
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Input } from '../Input';
 import { Button }from "../Button";
@@ -14,7 +14,7 @@ import { api } from '../../services/api';
 
 import { Container, Header, Main, Footer, Column } from './styles';
 
-export function ModalCard() {
+export function NewCard() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
@@ -24,6 +24,8 @@ export function ModalCard() {
 
   const [image, setImage] = useState(imgDefault);
   const [imageFile, setImageFile] = useState(null);
+
+  const navigate = useNavigate();
 
   async function handleNewCard() {
     const cleanValue = value.replace("R$ ", "").replaceAll(".", "");
@@ -45,7 +47,7 @@ export function ModalCard() {
       },
     });
 
-    alert("Card criado com sucesso");
+    navigate("/");
   }
 
   function handleChangeImage(event) {

@@ -7,7 +7,7 @@ class CardsController {
         const imageFilename = request.file.filename;
 
         const { user_id } = request.params;
-
+        
         const tagData = await knex("tags").where({ name: tag }).first();
         let tag_id = null;
 
@@ -31,6 +31,52 @@ class CardsController {
         const linkInsert = { card_id, url: link }
         await knex("links").insert(linkInsert);
 
+        response.json();
+    }
+
+    async update(request, response) {
+        const { id } = request.params;
+    
+        const { title, description, value, form_of_payment, tag, link} = request.body;
+    
+        const { user_id } = request.params;
+    
+        const tagData = await knex("tags").where({ name: tag }).first();
+        let tag_id = null;
+    
+        if (tagData) {
+            tag_id = tagData.id;
+        }
+    
+        let image = null;
+        if (request.file) {
+            const imageFilename = request.file.filename;
+            const diskStorage = new DiskStorage();
+            
+            // Verificar se a imagem antiga existe antes de deletá-la
+            const oldCard = await knex("cards").where({ id }).first();
+            if (oldCard && oldCard.image) {
+                await diskStorage.deleteFile(oldCard.image);
+            }
+    
+            // Salvar a nova imagem
+            image = await diskStorage.saveFile(imageFilename);
+        }
+    
+        await knex("cards").update({
+            title,
+            description,
+            value,
+            form_of_payment,
+            image,
+            tag_id,
+            user_id
+        }).where({ id });
+    
+        await knex("links").update({
+            url: link
+        }).where({ card_id: id });
+    
         response.json();
     }
 

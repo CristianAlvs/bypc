@@ -17,6 +17,14 @@ export const Header = styled.header`
     align-items: center;
     justify-content: space-between;
 
+    .aprovado {
+        background-color: ${({theme })=> theme.COLORS.GREEN};
+    }
+
+    .analisar {
+        background-color: ${({theme })=> theme.COLORS.ORANGE};
+    }
+
     > .actions {
         display: flex;
         gap: 6px;
@@ -34,7 +42,6 @@ export const Tag = styled.div`
     padding: 4px 10px;
     border-radius: 4px;
 
-    background-color: ${({theme })=> theme.COLORS.GREEN};
     color: white;
 `;
 
