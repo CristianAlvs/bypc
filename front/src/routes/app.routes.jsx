@@ -7,8 +7,7 @@ export function AppRoutes() {
     return(
         <Routes>
             <Route path="/" element={<MeusCards />}/>
-            <Route path="/cards/:id" element={<ModalCard />}/>
-            <Route path="/new" element={<ModalCard />}/>
+            <Route path="/:action?/:id?" element={<ModalCard />} />
         </Routes>
     )
 }

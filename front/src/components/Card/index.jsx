@@ -16,17 +16,6 @@ export function Card({ data }) {
 
   const imagemUrl = `${api.defaults.baseURL}/files/${image}`;
 
-  const navigate = useNavigate();
-
-  function handleCard(id) {
-    navigate(`/cards/${id}`);
-  };
-
-  async function deleteCard(id) {
-    await api.delete(`/cards/${id}`);
-    window.location.reload();
-  };
-
   return (
     <Container>
       <Header>
@@ -35,8 +24,12 @@ export function Card({ data }) {
         </Tag>
 
         <div className="actions">
-          <img src={iconEdit}  alt="edit" onClick={() => handleCard(id)}/>
-          <img src={iconDelete}  alt="delete" onClick={() => deleteCard(id)}/>
+          <Link to={`/edit/${id}`}>
+            <img src={iconEdit}  alt="edit"/>
+          </Link>
+          <Link to={`/delete/${id}`}>
+            <img src={iconDelete}  alt="delete"/>
+          </Link>
         </div>
       </Header>
       <main>
