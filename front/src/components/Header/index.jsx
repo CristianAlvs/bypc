@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 
@@ -10,13 +10,17 @@ import iconUser from "../../assets/iconUser.svg";
 
 export function Header() {
     const [total, setTotal] = useState();
+    const [selectedNavItem, setSelectedNavItem] = useState(() => {
+        const storedNavItem = localStorage.getItem('selectedNavItem');
+        return storedNavItem ? storedNavItem : 'Meus Cards'; // Se não houver nada no localStorage, definir 'Meus Cards' como padrão
+    });
 
     useEffect(() => {
         async function fetchCards() {
           const response = await api.get("/cards?user_id=1");
 
           const somaTotal = response.data.reduce((total, objeto) => {
-            if(objeto.tag.name == "APROVADO") {
+            if(objeto.tag.name === "APROVADO") {
                 return total + objeto.value;
             }
 
@@ -26,8 +30,9 @@ export function Header() {
           setTotal(somaTotal);
         }
     
+        localStorage.setItem('selectedNavItem', selectedNavItem);
         fetchCards()
-    }, []);
+    }, [selectedNavItem]);
 
     return(
         <Container>
@@ -38,8 +43,32 @@ export function Header() {
 
             <Navigation>
                 <ul>
-                    <li>Recomendações</li>
-                    <li className="select">Meus Cards</li>
+                    <li>
+                        <NavLink 
+                            to="/Recomendacoes"
+                            className={selectedNavItem === 'Recomendacoes' ? 'select' : ''}
+                            onClick={() => {
+                                setSelectedNavItem('Recomendacoes');
+                                document.querySelector('.select').classList.remove('select'); // Remove a classe 'select' de qualquer elemento que já a tenha
+                                currentTarget.classList.add('select'); // Adiciona a classe 'select' ao elemento atual (o que foi clicado)
+                            }}
+                        >
+                            Recomendações
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/" 
+                            className={selectedNavItem === 'Meus Cards' ? 'select' : ''}
+                            onClick={() => {
+                                setSelectedNavItem('Meus Cards');
+                                document.querySelector('.select').classList.remove('select'); // Remove a classe 'select' de qualquer elemento que já a tenha
+                                currentTarget.classList.add('select'); // Adiciona a classe 'select' ao elemento atual (o que foi clicado)
+                            }}
+                        >
+                            Meus Cards
+                        </NavLink>
+                    </li>
                 </ul>
             </Navigation>
 

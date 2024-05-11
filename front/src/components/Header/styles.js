@@ -43,7 +43,7 @@ export const Logo = styled.div`
 `;
 
 export const Navigation = styled.nav`
-    ul {
+    ul, a {
         display: flex;
         gap: 30px;
         font-family: "Aldrich";
@@ -52,8 +52,8 @@ export const Navigation = styled.nav`
         color: ${({theme })=> theme.COLORS.GRAY_300};
     }
 
-    ul .select{
-        color: ${({theme })=> theme.COLORS.DARK_BLUE};
+    ul li .select {
+        color: ${({ theme }) => theme.COLORS.DARK_BLUE};
         font-weight: bold;
     }
 
