@@ -1,13 +1,18 @@
 import { Modal } from './styles'
 import { useParams } from 'react-router-dom';
+import { useAuth } from "../../hooks/auth";
 
 import { MeusCards } from '../MeusCards';
 import { NewCard } from '../../components/NewCard';
 import { EditCard } from '../../components/EditCard';
 import { DeleteCard } from '../../components/DeleteCard';
+import { SignIn } from '../../components/SignIn';
+import { SignUp } from '../../components/SignUp';
 
-export function ModalCard() {
-  const { action, id } = useParams();
+export function ModalCard({ action }) {
+  const { id } = useParams();
+
+  const { user } = useAuth();
 
   const renderModal = (modalType) => {
     switch (modalType) {
@@ -17,6 +22,10 @@ export function ModalCard() {
         return <DeleteCard id={id} />;
       case 'new':
         return <NewCard />;
+      case 'login':
+        return <SignIn />;
+      case 'signup':
+          return <SignUp />;
       default:
         return null;
     }
@@ -24,7 +33,7 @@ export function ModalCard() {
 
   return (
     <div>
-      <MeusCards />
+      <MeusCards state={user ? "" : "default"}/>
       <Modal>
         {renderModal(action)}
       </Modal>

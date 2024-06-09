@@ -7,7 +7,7 @@ import { Card } from '../../components/Card'
 import { api } from '../../services/api';
 import { useEffect, useState } from 'react';
 
-export function MeusCards() {
+export function MeusCards({ state }) {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -22,16 +22,19 @@ export function MeusCards() {
   return (
     <Container>
       <Header />
-      <Content>
-        {
-          cards.map(card => (
-            <Card
-              key={String(card.id)}
-              data={card}
-            />
-          ))
-        }
-      </Content>
+      { state == "default" || cards.length === 0 
+        ? <Default /> 
+        : <Content>
+            {
+              cards.map(card => (
+                <Card
+                  key={String(card.id)}
+                  data={card}
+                />
+              ))
+            }
+          </Content>
+      }
     </Container>
   )
 }

@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 
 import { Container, Profile, Logo, Total, Navigation} from './styles';
 import { Button } from '../Button'
@@ -9,6 +10,8 @@ import iconPC from '../../assets/iconPC.svg';
 import iconUser from "../../assets/iconUser.svg";
 
 export function Header() {
+    const { signOut, user } = useAuth();
+
     const [total, setTotal] = useState();
     const [selectedNavItem, setSelectedNavItem] = useState(() => {
         const storedNavItem = localStorage.getItem('selectedNavItem');
@@ -75,18 +78,26 @@ export function Header() {
             <div className='totalAndButton'>
                 <Total>
                     <span>TOTAL</span>
-                    <span>{total ? total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 00,00'}</span>
+                    <span>{total && user ? total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 00,00'}</span>
                 </Total>
 
-                <Link to="/new">
+                <Link to={user ? "/new" : "/login"}>
                     <Button title="Novo Card" padding="12px" fontSize="18px"/>
                 </Link>
             </div>
             
                 
             <Profile>
-                <p>Login</p>
-                <img src={iconUser} alt="Login" />  
+                { user ?
+                    <Link onClick={signOut}>
+                        <p>Sair</p>
+                        <img src={iconUser} alt="User" />  
+                    </Link> : 
+                    <Link to="/login">
+                        <p>Login</p>
+                        <img src={iconUser} alt="User" />  
+                    </Link>
+                }
             </Profile>
 
         </Container>

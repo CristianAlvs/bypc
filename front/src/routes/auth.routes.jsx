@@ -4,14 +4,13 @@ import { Recomendacoes } from "../pages/Recomendacoes";
 import { MeusCards } from "../pages/MeusCards";
 import { ModalCard } from "../pages/ModalCard";
 
-export function AppRoutes() {
+export function AuthRoutes() {
     return(
         <Routes>
             <Route path="/Recomendacoes" element={<Recomendacoes />}/>
-            <Route path="/" element={<MeusCards />}/>
-            <Route path="/new" element={<ModalCard action="new" />} />
-            <Route path="/edit/:id" element={<ModalCard action="edit" />} />
-            <Route path="/delete/:id" element={<ModalCard action="delete" />} />
+            <Route path="/" element={<MeusCards state="default"/>}/>
+            <Route path="/login" element={<ModalCard action="login" />} />
+            <Route path="/signup" element={<ModalCard action="signup" />} />
         </Routes>
     )
 }

@@ -6,7 +6,7 @@ class CardsController {
         const { title, description, value, form_of_payment, tag, link} = request.body;
         const imageFilename = request.file.filename;
 
-        const { user_id } = request.params;
+        const user_id = request.user.id;
         
         const tagData = await knex("tags").where({ name: tag }).first();
         let tag_id = null;
@@ -103,7 +103,7 @@ class CardsController {
     }
 
     async index(request, response) {
-        const { user_id } = request.query;
+        const user_id = request.user.id;
 
         const cardsRequest = await knex("cards").where({ user_id }).orderBy("title");
 

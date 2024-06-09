@@ -17,14 +17,18 @@ export const Container = styled.header`
 `;
 
 export const Profile = styled.div`
-    display: flex;
-    align-items: center;
     background-color:transparent ;
     border: none;
     font-size: 16px;
     gap: 8px;
     cursor: pointer;
-    color: ${({theme })=> theme.COLORS.FONT_COLOR};
+
+    > a {
+        display: flex;
+        align-items: center;
+
+        color: ${({theme })=> theme.COLORS.FONT_COLOR};
+    }
 
 `;
 
