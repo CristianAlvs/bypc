@@ -14,12 +14,17 @@ export function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passWordConfirm, setPasswordConfirm] = useState("");
 
   const navigate = useNavigate();
 
   function handleSignUp() {
-    if(!name || !email || !password) {
+    if(!name || !email || !password || !passWordConfirm) {
       return alert("Preencha todos os campos");
+    }
+
+    if(passWordConfirm != password) {
+      return alert("Senhas não coincidem");
     }
 
     api.post("/users", { name, email, password })
@@ -60,13 +65,13 @@ export function SignUp() {
         />
 
         <Input 
-          label={"Senha"} placeholder="Digite" 
+          label={"Senha"} placeholder="Digite" type="password"
           onChange={e => setPassword(e.target.value)}
         />
 
         <Input 
-          label={"Confirme sua senha"} placeholder="Digite" 
-          onChange={e => setTitle(e.target.value)}
+          label={"Confirme sua senha"} placeholder="Digite" type="password"
+          onChange={e => setPasswordConfirm(e.target.value)}
         />
       </Main>
       <Footer>

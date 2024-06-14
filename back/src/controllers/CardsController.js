@@ -4,7 +4,14 @@ const DiskStorage = require("../providers/DiskStorage");
 class CardsController {
     async create(request, response) {
         const { title, description, value, form_of_payment, tag, link} = request.body;
-        const imageFilename = request.file.filename;
+
+        let image;
+
+        if(request.file) {
+            const imageFilename = request.file.filename;
+            const diskStorage = new DiskStorage();
+            image = await diskStorage.saveFile(imageFilename);
+        }
 
         const user_id = request.user.id;
         
@@ -14,9 +21,6 @@ class CardsController {
         if (tagData) {
             tag_id = tagData.id;
         }
-
-        const diskStorage = new DiskStorage();
-        const image = await diskStorage.saveFile(imageFilename);
 
         const [card_id] = await knex("cards").insert({
             title,
@@ -39,7 +43,7 @@ class CardsController {
     
         const { title, description, value, form_of_payment, tag, link} = request.body;
     
-        const { user_id } = request.params;
+        const user_id = request.user.id;
     
         const tagData = await knex("tags").where({ name: tag }).first();
         let tag_id = null;

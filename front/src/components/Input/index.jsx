@@ -1,7 +1,7 @@
 import { Container } from './styles';
 import { NumericFormat } from 'react-number-format';
 
-export function Input({ label, inputType, ...rest }) {
+export function Input({ label, inputType, className, ...rest }) {
   let inputComponent;
 
   switch (inputType) {
@@ -26,7 +26,7 @@ export function Input({ label, inputType, ...rest }) {
   }
 
   return (
-    <Container>
+    <Container className={className}>
       <label>{label}</label>
       {inputComponent}
     </Container>

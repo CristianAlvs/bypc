@@ -20,7 +20,7 @@ export function Header() {
 
     useEffect(() => {
         async function fetchCards() {
-          const response = await api.get("/cards?user_id=1");
+          const response = await api.get("/cards");
 
           const somaTotal = response.data.reduce((total, objeto) => {
             if(objeto.tag.name === "APROVADO") {

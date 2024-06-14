@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from "../../hooks/auth";
 
 import { Input } from '../Input';
 import { Button }from "../Button";
@@ -25,9 +26,39 @@ export function NewCard() {
   const [image, setImage] = useState(imgDefault);
   const [imageFile, setImageFile] = useState(null);
 
+  const [invalidFields, setInvalidFields] = useState([]);
+
   const navigate = useNavigate();
 
+  function validateFields() {
+    const invalids = [];
+
+    if (!title) {
+      invalids.push("title");
+    }
+    if (!value) {
+      invalids.push("value");
+    }
+    if (!form_of_payment) {
+      invalids.push("form_of_payment");
+    }
+    if (!link) {
+      invalids.push("link");
+    }
+    if (!status) {
+      invalids.push("status");
+    }
+
+    setInvalidFields(invalids);
+    
+    return invalids.length === 0;
+  }
+
   async function handleNewCard() {
+    if (!validateFields()) {
+      return alert("Preencha os campos obrigatórios!");
+    }
+    
     const cleanValue = value.replace("R$ ", "").replaceAll(".", "");
     const cleanValueWithDot = cleanValue.replace(",", ".");
     const parsedValue = parseFloat(cleanValueWithDot);
@@ -41,7 +72,7 @@ export function NewCard() {
     formData.append("tag", status.toUpperCase());
     formData.append("link", link);
   
-    await api.post("/cards/1", formData, {
+    await api.post("/cards", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -74,6 +105,7 @@ export function NewCard() {
         <Column>
           <Input 
             label={"Título *"} placeholder="Escreva o título do Card" 
+            className={invalidFields.includes("title") ? "invalid" : ""}
             onChange={e => setTitle(e.target.value)}
           />
 
@@ -84,16 +116,19 @@ export function NewCard() {
 
           <Input 
             label={"Valor *"} inputType={"currency"} placeholder="R$ 00,00" 
+            className={invalidFields.includes("value") ? "invalid" : ""}
             onChange={e => setValue(e.target.value)}
           />
 
           <Input 
             label={"Forma de Pagamento *"} placeholder="Digite" 
+            className={invalidFields.includes("form_of_payment") ? "invalid" : ""}
             onChange={e => setFormOfPayment(e.target.value)}
           />
 
           <Input 
             label={"Link do Produto *"} placeholder="Cole o link deste produto" 
+            className={invalidFields.includes("link") ? "invalid" : ""}
             onChange={e => setLink(e.target.value)}
           />
         </Column>
@@ -105,6 +140,7 @@ export function NewCard() {
 
           <Input 
             label={"Status *"} inputType={"select"} placeholder="Selecione"
+            className={invalidFields.includes("status") ? "invalid" : ""}
             onChange={e => setStatus(e.target.value)}
           >
             <option hidden>Selecione</option>

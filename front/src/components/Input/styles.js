@@ -7,6 +7,10 @@ export const Container = styled.div`
     margin-bottom: 12px;  
     width: 100%;
 
+    &.invalid {
+        border-color: red;
+    }
+    
     > label {
         font-size: 12px;
         font-weight: 400;

@@ -9,13 +9,13 @@ function AuthProvider({ children }) {
     async function signIn({ email, password}) {
         try {
             const response = await api.post("/sessions", { email, password });
-            const { user, token } = response.data;
+            const { token, user } = response.data;
 
             localStorage.setItem("@bypc:user", JSON.stringify(user));
             localStorage.setItem("@bypc:token", token);
 
-            api.defaults.headers.authorization = `Bearer ${token}`;
-            setData({ user, token });
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setData({ token, user });
 
             return user;
         } catch (error) {
@@ -39,11 +39,11 @@ function AuthProvider({ children }) {
         const token = localStorage.getItem("@bypc:token");
 
         if(user && token) {
-            api.defaults.headers.authorization = `Bearer ${token}`;
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
             setData({
-                user: JSON.parse(user),
-                token
+                token,
+                user: JSON.parse(user)
             });
         }
     }, []);

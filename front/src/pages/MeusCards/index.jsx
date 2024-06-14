@@ -12,7 +12,7 @@ export function MeusCards({ state }) {
 
   useEffect(() => {
     async function fetchCards() {
-      const response = await api.get("/cards?user_id=1");
+      const response = await api.get("/cards");
       setCards(response.data);
     }
 

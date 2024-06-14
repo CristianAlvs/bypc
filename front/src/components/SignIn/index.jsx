@@ -44,7 +44,7 @@ export function SignIn() {
         />
 
         <Input 
-          label={"Senha"} placeholder="Digite" 
+          label={"Senha"} placeholder="Digite" type="password"
           onChange={e => setPassword(e.target.value)}
         />
 
