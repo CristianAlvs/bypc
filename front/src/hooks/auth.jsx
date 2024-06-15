@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { api } from '../services/api'
+import { api } from '../services/api';
 
 export const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
     const [ data, setData ] = useState({});
+    const [ secondAccess, setSecondAccess ] = useState(false);
 
     async function signIn({ email, password}) {
         try {
@@ -34,6 +35,12 @@ function AuthProvider({ children }) {
         setData({});
     }
 
+    async function checkSecondAccess() {
+        localStorage.setItem("@bypc:secondAccess", true);
+
+        setSecondAccess(true);
+    }
+
     useEffect(() => {
         const user = localStorage.getItem("@bypc:user");
         const token = localStorage.getItem("@bypc:token");
@@ -46,10 +53,17 @@ function AuthProvider({ children }) {
                 user: JSON.parse(user)
             });
         }
+
+        const secondAccess = localStorage.getItem("@bypc:secondAccess");
+
+        if(secondAccess) {
+            setSecondAccess(true);
+        }
+
     }, []);
 
     return (
-        <AuthContext.Provider value={{ signIn, signOut, user: data.user }}> 
+        <AuthContext.Provider value={{ checkSecondAccess, secondAccess, signIn, signOut, user: data.user }}> 
             {children}
         </AuthContext.Provider>
     )
